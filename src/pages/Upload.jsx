@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Papa from "papaparse";
-import DatasetSummary from "../components/DatasetSummary";
+
 import Layout from "../components/Layout";
-import DataPreview from "../components/DataPreview";
+import DatasetSummary from "../components/DatasetSummary";
 import DatasetInsights from "../components/DatasetInsights";
+import DataPreview from "../components/DataPreview";
+import UploadHistory from "../components/UploadHistory";
+import DynamicChart from "../components/DynamicChart";
 
 function Upload() {
   const [file, setFile] = useState(null);
@@ -19,7 +22,6 @@ function Upload() {
     Papa.parse(selectedFile, {
       header: true,
       skipEmptyLines: true,
-
       complete: (results) => {
         setData(results.data);
       },
@@ -28,11 +30,9 @@ function Upload() {
 
   return (
     <Layout>
-
       <h2>Upload Dataset</h2>
 
       <div className="card shadow p-4 mt-4">
-
         <input
           type="file"
           className="form-control"
@@ -45,15 +45,17 @@ function Upload() {
             <strong>Selected File:</strong> {file.name}
           </div>
         )}
-
       </div>
 
       <DatasetSummary data={data} />
 
       <DatasetInsights data={data} />
 
-      <DataPreview data={data} />
+      <UploadHistory file={file} />
 
+      <DynamicChart data={data} />
+
+      <DataPreview data={data} />
     </Layout>
   );
 }

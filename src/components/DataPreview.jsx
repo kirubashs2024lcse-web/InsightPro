@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Papa from "papaparse";
 
 function DataPreview({ data }) {
   const [search, setSearch] = useState("");
@@ -15,25 +16,49 @@ function DataPreview({ data }) {
     )
   );
 
+  const downloadCSV = () => {
+    const csv = Papa.unparse(filteredData);
+
+    const blob = new Blob([csv], {
+      type: "text/csv;charset=utf-8;",
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "filtered_dataset.csv";
+    link.click();
+
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="card shadow mt-4">
       <div className="card-body">
-
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h4>Dataset Preview</h4>
 
-          <input
-            type="text"
-            className="form-control w-25"
-            placeholder="Search..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <div className="d-flex gap-2">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+
+            <button
+              className="btn btn-success"
+              onClick={downloadCSV}
+            >
+              Export CSV
+            </button>
+          </div>
         </div>
 
         <div className="table-responsive">
           <table className="table table-bordered table-striped">
-
             <thead>
               <tr>
                 {headers.map((header) => (
@@ -51,10 +76,8 @@ function DataPreview({ data }) {
                 </tr>
               ))}
             </tbody>
-
           </table>
         </div>
-
       </div>
     </div>
   );
