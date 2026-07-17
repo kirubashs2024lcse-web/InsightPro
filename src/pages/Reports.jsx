@@ -1,5 +1,12 @@
+import Layout from "../components/Layout";
+
 function Reports() {
-  return <h2 className="m-4">Reports Page</h2>;
+  return (
+    <Layout>
+      <h2>Reports</h2>
+      <p>This page will show generated reports.</p>
+    </Layout>
+  );
 }
 
 export default Reports;

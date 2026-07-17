@@ -1,5 +1,12 @@
+import Layout from "../components/Layout";
+
 function Settings() {
-  return <h2 className="m-4">Settings Page</h2>;
+  return (
+    <Layout>
+      <h2>Settings</h2>
+      <p>Application settings will appear here.</p>
+    </Layout>
+  );
 }
 
 export default Settings;
